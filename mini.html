@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Resume Builder</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to top right, #fff, #eef6ff);
+            color: #333;
+            margin: 0;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+        }
+
+        .header .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        /* Main Landing Section */
+        .main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .main-text {
+            max-width: 50%;
+        }
+
+        .main-text h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .main-text p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .main-text button {
+            padding: 15px 25px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .main-text button:hover {
+            background-color: #0056b3;
+        }
+
+        .main-image {
+            max-width: 45%;
+        }
+
+        .main-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Resume Builder Form Section */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: none; /* Initially hidden */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .main-text {
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .main-image {
+                max-width: 80%;
+                margin: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">Resume Now.</div>
+        <div>
+            <a href="#">Contact Us</a>
+            <a href="#">Login</a>
+        </div>
+    </div>
+
+    <!-- Main Landing Content -->
+    <div class="main">
+        <div class="main-text">
+            <h1>Job-Winning Resume Templates</h1>
+            <p>Get the job 2x as fast! Choose from dozens of recruiter-approved templates. Click to add ready-to-use skills and phrases to your template.</p>
+            <button id="openBuilder">Choose a template</button>
+        </div>
+        <div class="main-image">
+            <img src="https://via.placeholder.com/600x800" alt="Resume Template">
+        </div>
+    </div>
+
+    <!-- Resume Builder Form -->
+    <div class="container" id="resumeBuilder">
+        <h1>Responsive Resume Builder</h1>
+        <form id="resumeForm">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+            <label for="address">Address</label>
+            <textarea id="address" name="address" placeholder="Enter your address" rows="2"></textarea>
+
+            <label for="skills">Skills</label>
+            <input type="text" id="skills" name="skills" placeholder="Enter your skills (comma-separated)" required>
+
+            <label for="experience">Experience</label>
+            <textarea id="experience" name="experience" placeholder="Describe your work experience" rows="4"></textarea>
+
+            <label for="education">Education</label>
+            <textarea id="education" name="education" placeholder="Describe your education" rows="3"></textarea>
+
+            <button type="button" id="generateResume">Generate & Download Resume</button>
+        </form>
+    </div>
+
+    <script>
+        // Show the resume builder when "Choose a template" is clicked
+        document.getElementById("openBuilder").addEventListener("click", function () {
+            document.querySelector(".main").style.display = "none";
+            document.getElementById("resumeBuilder").style.display = "block";
+        });
+
+        // Generate and download the resume
+        document.getElementById("generateResume").addEventListener("click", function () {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const phone = document.getElementById("phone").value;
+            const address = document.getElementById("address").value;
+            const skills = document.getElementById("skills").value;
+            const experience = document.getElementById("experience").value;
+            const education = document.getElementById("education").value;
+
+            const resumeContent = `
+            Resume
+            -------------------------------
+            Name: ${name}
+            Email: ${email}
+            Phone: ${phone}
+            Address: ${address}
+            
+            Skills:
+            ${skills.split(",").join("\n")}
+            
+            Experience:
+            ${experience}
+
+            Education:
+            ${education}
+            `;
+
+            const blob = new Blob([resumeContent], { type: "text/plain" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `${name.replace(" ", "_")}_Resume.txt`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+    </script>
+</body>
+</html>
